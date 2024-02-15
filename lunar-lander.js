@@ -68,3 +68,79 @@ function lunar(x, y, s) {
   endShape();
   pop();
 }
+
+function startScreen() {
+  push();
+  background(0, 0, 0);
+
+  fill("lightpink");
+  rect(width / 2 - 70, height / 2, 300, 60, 30); // button
+  textSize(20);
+  fill("white");
+  text("Click Here To Start", width / 2, height / 2 + 35);
+
+  fill(255, 255, 255);
+  textSize(50);
+  textFont();
+  text("LUNAR LANDER", width / 2 - 100, height / 4);
+
+  pop();
+}
+
+let gameInfoSetiings = {
+  x: screenWidth / 2,
+  y: screenHeight / 2,
+};
+function gameInfo() {
+  push();
+
+  fill(255, 255, 255);
+  textSize(16);
+
+  text(
+    "Land with velocity max 30km/h to win",
+    gameInfoSetiings.x - 100,
+    gameInfoSetiings.y + 130
+  );
+
+  text(
+    "controls: arrow-down = thrust, spacebar = restart",
+    gameInfoSetiings.x - 120,
+    gameInfoSetiings.y + 150
+  );
+  pop();
+}
+
+function draw() {
+  if (state === "start") {
+    startScreen();
+    gameInfo();
+    if (keyIsPressed === true && keyCode === 32) {
+      state = "game";
+    }
+  } else if (state === "game") {
+    background(0, 0, 0);
+
+    for (let star of stars) {
+      fill(255, 255, 255, Math.abs(Math.sin(star.alpha)) * 255);
+      ellipse(star.x, star.y, 2);
+      star.alpha = star.alpha + 0.02;
+    }
+
+    fill("grey");
+    rect(position.x, position.y, 600, 200);
+    lunar(lunarSettings.x, lunarSettings.y, lunarSettings.size);
+
+    push();
+    fill(255, 255, 255);
+    textSize(16);
+    textFont();
+
+    text(
+      "velocity: " + Math.floor(lunarSettings.velocity * 20) + " km/h", //MULTIPLIED BY 20 TO CHANGE TO KM/H
+      50,
+      75
+    );
+
+    pop();
+    }}
