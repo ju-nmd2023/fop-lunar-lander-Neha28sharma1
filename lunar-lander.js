@@ -4,7 +4,7 @@ function setup() {
 }
 
 //Game Variables & Game states
-let gameIsActive = true;
+let gameIsRunning = true;
 let state = "start";
 let result;
 let lunarLanded;
@@ -143,4 +143,72 @@ function draw() {
     );
 
     pop();
-    }}
+    if (gameIsRunning) {
+      //gravity
+      lunarSettings.y = lunarSettings.y + lunarSettings.velocity;
+      lunarSettings.velocity =
+        lunarSettings.velocity + lunarSettings.acceleration;
+
+      //Rocket stop
+      if (lunarSettings.y > landingY && lunarSettings.velocity > 1.5) {
+        result = "You Lost";
+
+        lunarLanded = false;
+        gameIsRunning = false;
+        state = "end";
+      } else if (lunarSettings.y > landingY && lunarSettings.velocity < 1.5) {
+        result = "great! you landed safely";
+        lunarLanded = true;
+        gameIsRunning = false;
+        state = "end";
+      }
+      if (keyIsDown(40)) {
+        //arrowdown
+
+        lunarSettings.velocity = lunarSettings.velocity - 0.3;
+        console.log(lunarSettings.y);
+        console.log(lunarSettings.velocity);
+      }
+    }
+  } else if (state === "end") {
+    noStroke();
+    background(0, 0, 0);
+    for (let star of stars) {
+      fill(255, 255, 255, Math.abs(Math.sin(star.alpha)) * 255);
+      ellipse(star.x, star.y, 2);
+      star.alpha = star.alpha + 0.05;
+      fill("grey");
+      rect(position.x, position.y, 600, 200);
+    }
+
+    //Game text
+    push();
+    fill(255, 255, 255);
+    textSize(50);
+    textAlign(CENTER);
+    text("LUNAR LANDER", screenWidth / 2, screenHeight / 3);
+    pop();
+
+    //end screen
+    push();
+    fill(255, 255, 255);
+    textSize(16);
+    textAlign(CENTER);
+    text(result, screenWidth / 2, screenHeight / 3 + 35);
+    pop();
+
+    if (lunarLanded === true) {
+      lunar(lunarSettings.x, lunarSettings.y, lunarSettings.size);
+    }
+    if (keyIsDown(32)) {
+      lunarSettings.x = screenWidth / 2; //calling variables again to restart game
+      lunarSettings.y = 50;
+      lunarSettings.size = 1;
+      lunarSettings.velocity = 0.3;
+      lunarSettings.acceleration = 0.16;
+
+      state = "game";
+      gameIsRunning = true;
+    }
+  }
+}
