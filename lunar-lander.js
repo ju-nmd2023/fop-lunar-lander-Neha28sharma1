@@ -4,13 +4,13 @@ function setup() {
 }
 
 //Game Variables & Game states
-let gameIsRunning = true;
-let state = "start";
-let result;
 let lunarLanded;
 let landingY = 350;
 const screenWidth = 600;
 const screenHeight = 400;
+let gameIsRunning = true;
+let state = "start";
+let result;
 
 //Stars sky By Garrit
 let stars = [];
@@ -22,10 +22,7 @@ for (let i = 0; i < 1000; i++) {
     y: Math.floor(Math.random() * screenHeight),
     alpha: Math.random(),
   };
-  const planet = {
-    x: Math.floor(Math.random() * screenWidth),
-    y: Math.floor(Math.random() * screenHeight),
-  };
+
   stars.push(star);
 }
 
@@ -74,15 +71,15 @@ function startScreen() {
   background(0, 0, 0);
 
   fill("lightpink");
-  rect(width / 2 - 70, height / 2, 300, 60, 30); // button
+  rect(width / 2 - 100, height / 2, 300, 60, 30); // button
   textSize(20);
   fill("white");
-  text("Click Here To Start", width / 2, height / 2 + 35);
+  text("Click Here To Start", width / 2-30, height / 2 + 35);
 
   fill(255, 255, 255);
   textSize(50);
   textFont();
-  text("LUNAR LANDER", width / 2 - 100, height / 4);
+  text("LUNAR LANDER", width / 2 - 130, height / 4);
 
   pop();
 }
@@ -99,13 +96,13 @@ function gameInfo() {
 
   text(
     "Land with velocity max 30km/h to win",
-    gameInfoSetiings.x - 100,
+    gameInfoSetiings.x - 110,
     gameInfoSetiings.y + 130
   );
 
   text(
     "controls: arrow-down = thrust, spacebar = restart",
-    gameInfoSetiings.x - 120,
+    gameInfoSetiings.x - 150,
     gameInfoSetiings.y + 150
   );
   pop();
