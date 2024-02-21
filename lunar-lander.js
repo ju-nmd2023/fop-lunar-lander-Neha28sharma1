@@ -14,7 +14,7 @@ let result;
 
 //Stars sky By Garrit
 let stars = [];
-let position = { x: 0, y: 300 }; //for surface
+let position = { x: 300, y: 600 }; //for surface
 
 for (let i = 0; i < 1000; i++) {
   const star = {
@@ -101,7 +101,7 @@ function gameInfo() {
   );
 
   text(
-    "controls: arrow-down = thrust, spacebar = restart",
+    "controls: arrow-up = thrust, mousebutton = restart",
     gameInfoSetiings.x - 150,
     gameInfoSetiings.y + 150
   );
@@ -112,9 +112,6 @@ function draw() {
   if (state === "start") {
     startScreen();
     gameInfo();
-    if (keyIsPressed === true && keyCode === 32) {
-      state = "game";
-    }
   } else if (state === "game") {
     background(0, 0, 0);
 
@@ -124,8 +121,17 @@ function draw() {
       star.alpha = star.alpha + 0.02;
     }
 
-    fill("grey");
-    rect(position.x, position.y, 600, 200, 2000);
+    fill(128, 128, 128, 240);
+    ellipse(position.x, position.y, 600);
+    fill(127, 200, 200);
+
+    ellipse(180, 354, 30);
+    ellipse(380, 400, 40);
+    ellipse(400, 354, 30);
+    ellipse(280, 354, 30);
+    ellipse(280, 400, 30);
+    ellipse(300, 320, 30);
+
     lunar(lunarSettings.x, lunarSettings.y, lunarSettings.size);
 
     push();
@@ -159,7 +165,7 @@ function draw() {
         gameIsRunning = false;
         state = "end";
       }
-      if (keyIsDown(40)) {
+      if (keyIsDown(38)) {
         //arrowdown
 
         lunarSettings.velocity = lunarSettings.velocity - 0.3;
@@ -174,8 +180,16 @@ function draw() {
       fill(255, 255, 255, Math.abs(Math.sin(star.alpha)) * 255);
       ellipse(star.x, star.y, 2);
       star.alpha = star.alpha + 0.05;
-      fill("grey");
-      rect(position.x, position.y, 600, 200);
+      fill(128, 128, 128, 240);
+      ellipse(position.x, position.y, 600);
+      fill(127, 200, 200);
+
+      ellipse(180, 354, 30);
+      ellipse(380, 400, 40);
+      ellipse(400, 354, 30);
+      ellipse(280, 354, 30);
+      ellipse(280, 400, 30);
+      ellipse(300, 320, 30);
     }
 
     //Game text
@@ -197,15 +211,27 @@ function draw() {
     if (lunarLanded === true) {
       lunar(lunarSettings.x, lunarSettings.y, lunarSettings.size);
     }
-    if (keyIsDown(32)) {
-      lunarSettings.x = screenWidth / 2; //calling variables again to restart game
-      lunarSettings.y = 50;
-      lunarSettings.size = 1;
-      lunarSettings.velocity = 0.3;
-      lunarSettings.acceleration = 0.16;
+  }
+}
 
-      state = "game";
-      gameIsRunning = true;
-    }
+function mouseClicked() {
+  if (
+    state === "start" &&
+    mouseX > 200 &&
+    mouseX < 200 + 200 &&
+    mouseY > 200 &&
+    mouseY < 235 + 60
+  ) {
+    state = "game";
+  }
+  if (state === "end") {
+    lunarSettings.x = screenWidth / 2; //calling variables again to start game again
+    lunarSettings.y = 50;
+    lunarSettings.size = 1;
+    lunarSettings.velocity = 0.3;
+    lunarSettings.acceleration = 0.16;
+
+    state = "game";
+    gameIsRunning = true;
   }
 }
