@@ -49,7 +49,12 @@ function lunar(x, y, s) {
   triangle(x - 30 * s, y + 20 * s, x, y - 30 * s, x + 30 * s, y + 20 * s);
   fill("white");
   ellipse(x, y - 20 * s, 30 * s);
-  fill("yellow");
+
+  pop();
+}
+
+function flame(x, y, s) {
+  fill(255, 165, 0, 200);
   beginShape();
   vertex(x - 20 * s, y + 20 * s);
 
@@ -63,9 +68,7 @@ function lunar(x, y, s) {
   );
 
   endShape();
-  pop();
 }
-
 function startScreen() {
   push();
   background(0, 0, 0);
@@ -171,6 +174,7 @@ function draw() {
         lunarSettings.velocity = lunarSettings.velocity - 0.3;
         console.log(lunarSettings.y);
         console.log(lunarSettings.velocity);
+        flame(lunarSettings.x, lunarSettings.y, lunarSettings.size);
       }
     }
   } else if (state === "end") {
