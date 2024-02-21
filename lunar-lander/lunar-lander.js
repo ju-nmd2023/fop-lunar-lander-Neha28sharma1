@@ -1,5 +1,7 @@
 function setup() {
   createCanvas(600, 400);
+
+  frameRate(30);
   background(0, 0, 0);
 }
 
@@ -28,7 +30,7 @@ for (let i = 0; i < 1000; i++) {
 
 //Lunar
 
-let lunarSettings = {
+let lunarValues = {
   x: screenWidth / 2,
   y: 50,
   size: 1,
@@ -38,7 +40,7 @@ let lunarSettings = {
 
 function lunar(x, y, s) {
   noStroke();
-  //   translate(x, y);
+
   push();
   fill("white");
   triangle(x - 20 * s, y - 50 * s, x, y - 80 * s, x + 20 * s, y - 50 * s);
@@ -74,15 +76,15 @@ function startScreen() {
   background(0, 0, 0);
 
   fill("lightpink");
-  rect(width / 2 - 100, height / 2, 300, 60, 30); // button
+  rect(screenWidth / 2 - 160, screenHeight / 2, 300, 60, 30); // button
   textSize(20);
   fill("white");
-  text("Click Here To Start", width / 2 - 30, height / 2 + 35);
+  text("Click Here To Start", screenWidth / 2 - 100, screenHeight / 2 + 35);
 
   fill(255, 255, 255);
   textSize(50);
   textFont();
-  text("LUNAR LANDER", width / 2 - 130, height / 4);
+  text("LUNAR LANDER", screenWidth / 2 - 185, screenHeight / 4);
 
   pop();
 }
@@ -99,13 +101,13 @@ function gameInfo() {
 
   text(
     "Land with velocity max 30km/h to win",
-    gameInfoSetiings.x - 110,
+    gameInfoSetiings.x - 140,
     gameInfoSetiings.y + 130
   );
 
   text(
     "controls: arrow-up = thrust, mousebutton = restart",
-    gameInfoSetiings.x - 150,
+    gameInfoSetiings.x - 180,
     gameInfoSetiings.y + 150
   );
   pop();
@@ -135,7 +137,7 @@ function draw() {
     ellipse(280, 400, 30);
     ellipse(300, 320, 30);
 
-    lunar(lunarSettings.x, lunarSettings.y, lunarSettings.size);
+    lunar(lunarValues.x, lunarValues.y, lunarValues.size);
 
     push();
     fill(255, 255, 255);
@@ -143,7 +145,7 @@ function draw() {
     textFont();
 
     text(
-      "velocity: " + Math.floor(lunarSettings.velocity * 20) + " km/h", //MULTIPLIED BY 20 TO CHANGE TO KM/H
+      "velocity: " + Math.floor(lunarValues.velocity * 20) + " km/h", //MULTIPLIED BY 20 TO CHANGE TO KM/H
       30,
       45
     );
@@ -151,18 +153,17 @@ function draw() {
     pop();
     if (gameIsRunning) {
       //gravity
-      lunarSettings.y = lunarSettings.y + lunarSettings.velocity;
-      lunarSettings.velocity =
-        lunarSettings.velocity + lunarSettings.acceleration;
+      lunarValues.y = lunarValues.y + lunarValues.velocity;
+      lunarValues.velocity = lunarValues.velocity + lunarValues.acceleration;
 
       //Rocket stop
-      if (lunarSettings.y > landingY && lunarSettings.velocity > 1.5) {
+      if (lunarValues.y > landingY && lunarValues.velocity > 1.5) {
         result = "You Lost";
 
         lunarLanded = false;
         gameIsRunning = false;
         state = "end";
-      } else if (lunarSettings.y > landingY && lunarSettings.velocity < 1.5) {
+      } else if (lunarValues.y > landingY && lunarValues.velocity < 1.5) {
         result = "great! you landed safely";
         lunarLanded = true;
         gameIsRunning = false;
@@ -171,10 +172,9 @@ function draw() {
       if (keyIsDown(38)) {
         //arrowdown
 
-        lunarSettings.velocity = lunarSettings.velocity - 0.3;
-        console.log(lunarSettings.y);
-        console.log(lunarSettings.velocity);
-        flame(lunarSettings.x, lunarSettings.y, lunarSettings.size);
+        lunarValues.velocity = lunarValues.velocity - 0.3;
+
+        flame(lunarValues.x, lunarValues.y, lunarValues.size);
       }
     }
   } else if (state === "end") {
@@ -213,7 +213,7 @@ function draw() {
     pop();
 
     if (lunarLanded === true) {
-      lunar(lunarSettings.x, lunarSettings.y, lunarSettings.size);
+      lunar(lunarValues.x, lunarValues.y, lunarValues.size);
     }
   }
 }
@@ -229,11 +229,11 @@ function mouseClicked() {
     state = "game";
   }
   if (state === "end") {
-    lunarSettings.x = screenWidth / 2; //calling variables again to start game again
-    lunarSettings.y = 50;
-    lunarSettings.size = 1;
-    lunarSettings.velocity = 0.3;
-    lunarSettings.acceleration = 0.16;
+    lunarValues.x = screenWidth / 2; //calling variables again to start game again
+    lunarValues.y = 50;
+    lunarValues.size = 1;
+    lunarValues.velocity = 0.3;
+    lunarValues.acceleration = 0.16;
 
     state = "game";
     gameIsRunning = true;
