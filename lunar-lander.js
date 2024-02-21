@@ -5,7 +5,7 @@ function setup() {
 
 //Game Variables & Game states
 let lunarLanded;
-let landingY = 350;
+let landingY = 300;
 const screenWidth = 600;
 const screenHeight = 400;
 let gameIsRunning = true;
@@ -74,7 +74,7 @@ function startScreen() {
   rect(width / 2 - 100, height / 2, 300, 60, 30); // button
   textSize(20);
   fill("white");
-  text("Click Here To Start", width / 2-30, height / 2 + 35);
+  text("Click Here To Start", width / 2 - 30, height / 2 + 35);
 
   fill(255, 255, 255);
   textSize(50);
@@ -125,7 +125,7 @@ function draw() {
     }
 
     fill("grey");
-    rect(position.x, position.y, 600, 200);
+    rect(position.x, position.y, 600, 200, 2000);
     lunar(lunarSettings.x, lunarSettings.y, lunarSettings.size);
 
     push();
@@ -135,8 +135,8 @@ function draw() {
 
     text(
       "velocity: " + Math.floor(lunarSettings.velocity * 20) + " km/h", //MULTIPLIED BY 20 TO CHANGE TO KM/H
-      50,
-      75
+      30,
+      45
     );
 
     pop();
