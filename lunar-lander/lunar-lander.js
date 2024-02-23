@@ -71,6 +71,7 @@ function flame(x, y, s) {
 
   endShape();
 }
+
 function startScreen() {
   push();
   background(0, 0, 0);
@@ -164,7 +165,7 @@ function draw() {
         gameIsRunning = false;
         state = "end";
       } else if (lunarValues.y > landingY && lunarValues.velocity < 1.5) {
-        result = "great! you landed safely";
+        result = "Hurray! You Landed";
         lunarLanded = true;
         gameIsRunning = false;
         state = "end";
